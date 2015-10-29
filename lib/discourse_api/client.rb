@@ -70,9 +70,9 @@ module DiscourseApi
 
     def post(path, params={})
       response = request(:post, path, params)
-      case response.status
+      case response[:status]
       when 200
-        response.body
+        response[:body]
       else
         raise DiscourseApi::Error, response.body
       end
@@ -114,13 +114,13 @@ module DiscourseApi
       end
       response = connection.send(method.to_sym, path, params)
       handle_error(response)
-      response.env
+      response[:env]
     rescue Faraday::Error::ClientError, JSON::ParserError
       raise DiscourseApi::Error
     end
 
     def handle_error(response)
-      case response.status
+      case response[:status]
       when 403
         raise DiscourseApi::UnauthenticatedError.new(response.env[:body])
       end
