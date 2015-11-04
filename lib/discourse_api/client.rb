@@ -69,8 +69,8 @@ module DiscourseApi
     end
 
     def post(path, params={})
-      debugger
       response = request(:post, path, params)
+      puts response
       case response[:status]
       when 200
         response[:body]
