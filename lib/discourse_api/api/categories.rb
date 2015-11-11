@@ -4,10 +4,19 @@ module DiscourseApi
       # :color and :text_color are RGB hexadecimal strings
       # :permissions is a hash with the group name and permission_type which is an integer 1 = Full 2 = Create Post 3 = Read Only
       def create_category(args)
+        custom_keys = args.keys.select{|key| key.to_s.start_with?("custom") }
+        if !custom_keys.empty? 
+          args[:custom_fields] ||= {}
+          custom_keys.each do |custom_key|
+            args[:custom_fields][custom_key] = args[custom_key]
+          end
+        end
+
         args = API.params(args)
                   .required(:name, :color, :text_color)
-                  .optional(:description, :permissions)
+                  .optional(:description, :permissions, :parent_category_id, :suppress_from_homepage, :custom_fields, :custom_context_type, :custom_context_id, :read_restricted)
                   .default(parent_category_id: nil)
+        debugger
         response = post("/categories", args)
         response['category']
       end
