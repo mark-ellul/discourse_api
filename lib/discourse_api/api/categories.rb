@@ -45,6 +45,10 @@ module DiscourseApi
         response = get("/c/#{id}/show")
         response.body['category']
       end
+
+      def edit_category(id, params)
+        put("/categories/#{id}.json", params)
+      end
     end
   end
 end
