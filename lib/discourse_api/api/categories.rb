@@ -47,6 +47,14 @@ module DiscourseApi
       end
 
       def edit_category(id, params)
+        custom_keys = params.keys.select{|key| key.to_s.start_with?("custom") }
+        if !custom_keys.empty? 
+          params[:custom_fields] ||= {}
+          custom_keys.each do |custom_key|
+            params[:custom_fields][custom_key] = params[custom_key]
+          end
+        end
+
         put("/categories/#{id}.json", params)
       end
     end
