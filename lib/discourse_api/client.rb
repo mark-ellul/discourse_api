@@ -17,6 +17,8 @@ require 'discourse_api/api/badges'
 require 'discourse_api/api/email'
 require 'discourse_api/api/api_key'
 require 'discourse_api/api/backups'
+require 'discourse_api/api/color_schemes'
+require 'discourse_api/api/site_settings'
 
 module DiscourseApi
   class Client
@@ -38,6 +40,8 @@ module DiscourseApi
     include DiscourseApi::API::Email
     include DiscourseApi::API::ApiKey
     include DiscourseApi::API::Backups
+    include DiscourseApi::API::ColorSchemes
+    include DiscourseApi::API::SiteSettings
 
     def initialize(host, api_key = nil, api_username = nil)
       raise ArgumentError, 'host needs to be defined' if host.nil? || host.empty?
