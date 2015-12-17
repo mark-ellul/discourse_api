@@ -2,18 +2,7 @@ module DiscourseApi
   module API
     module ColorSchemes
 
-      def create_color_scheme(name, enabled=true, primary="222222", secondary="ffffff", tertiary="0088cc", 
-        quaternary="e45735", header_background="ffffff", 
-        header_primary="333333", danger="e45735", success="009900", love="fa6c8d", wiki="408040")
-        args = {name: name, enabled: enabled, colors: []}
-
-        %w(primary secondary tertiary quaternary header_background header_primary danger success love wiki).each do |k|
-          args[:colors] << {name: k, hex: eval(k)} 
-        end
-        post("/admin/color_schemes.json", args)
-      end
-
-      def edit_color_scheme(id, name, enabled=true, primary="222222", secondary="ffffff", tertiary="0088cc", 
+      def set_color_scheme(id, name, enabled=true, primary="222222", secondary="ffffff", tertiary="0088cc", 
         quaternary="e45735", header_background="ffffff", 
         header_primary="333333", danger="e45735", success="009900", love="fa6c8d", wiki="408040")
 
@@ -32,9 +21,9 @@ module DiscourseApi
           end
         end 
         if real_id.nil?
-          post("/admin/color_schemes.json", args)
+          post("/admin/color_schemes.json", {color_scheme: args})
         else
-          put("/admin/color_schemes/#{real_id.to_s}.json", args)
+          put("/admin/color_schemes/#{real_id.to_s}.json", {color_scheme: args})
         end
       end
     end

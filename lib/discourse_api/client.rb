@@ -18,6 +18,7 @@ require 'discourse_api/api/email'
 require 'discourse_api/api/api_key'
 require 'discourse_api/api/backups'
 require 'discourse_api/api/color_schemes'
+require 'discourse_api/api/site_customizations'
 require 'discourse_api/api/site_settings'
 
 module DiscourseApi
@@ -41,6 +42,7 @@ module DiscourseApi
     include DiscourseApi::API::ApiKey
     include DiscourseApi::API::Backups
     include DiscourseApi::API::ColorSchemes
+    include DiscourseApi::API::SiteCustomizations
     include DiscourseApi::API::SiteSettings
 
     def initialize(host, api_key = nil, api_username = nil)
@@ -75,8 +77,9 @@ module DiscourseApi
     def post(path, params={})
       response = request(:post, path, params)
       puts response
+      puts response[:status]
       case response[:status]
-      when 200
+      when 200, 201
         response[:body]
       else
         raise DiscourseApi::Error, response[:body]
