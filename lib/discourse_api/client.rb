@@ -20,6 +20,7 @@ require 'discourse_api/api/backups'
 require 'discourse_api/api/color_schemes'
 require 'discourse_api/api/site_customizations'
 require 'discourse_api/api/site_settings'
+require 'discourse_api/error'
 
 module DiscourseApi
   class Client
